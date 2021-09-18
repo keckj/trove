@@ -28,7 +28,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 #include <trove/array.h>
 #include <trove/utility.h>
-#include <thrust/detail/static_assert.h>
 
 namespace trove {
 namespace detail {
@@ -61,8 +60,7 @@ struct dismember_type<T, true, true, true> {
 template<typename T, typename U>
 struct aliased_size {
     static const int value = sizeof(T) / sizeof(U);
-    //Assert sizeof(T) % sizeof(U) == 0
-    THRUST_STATIC_ASSERT(sizeof(T) % sizeof(U) == 0);
+    static_assert(sizeof(T) % sizeof(U) == 0, "sizeof(T) % sizeof(U) != 0");
 };
 
 template<typename T,
