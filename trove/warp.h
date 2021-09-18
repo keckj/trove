@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace trove {
 
-enum {
+enum : unsigned int {
     WARP_SIZE = 32,
     WARP_MASK = 0x1f,
     WARP_CONVERGED = 0xFFFFFFFF,
@@ -43,6 +43,10 @@ inline bool warp_converged() {
 #else
     return (__ballot(true) == WARP_CONVERGED);
 #endif
+}
+
+inline __device__ int thread_id() {
+  return (threadIdx.z*blockDim.y + threadIdx.y)*blockDim.x + threadIdx.x;
 }
 
 }
